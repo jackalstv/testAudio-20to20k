@@ -1,3 +1,6 @@
+//
+// Created by André Martins on 26/12/2023.
+//
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
@@ -5,13 +8,12 @@
 
 #define PI 3.14159265358979323846
 
-#define START_FREQ 20.0 // fréquenc
+#define START_FREQ 20.0
 #define END_FREQ 20000.0
-#define DURATION 20.0
 #define SAMPLING_RATE 44100.0
 
-void generateSignal(double *signal, int numSamples) { // fonction qui génère le signal
-    double deltaFreq = (END_FREQ - START_FREQ) / DURATION;// on calcule le delta de fréquence
+void generateSignal(double *signal, int numSamples) {
+    double deltaFreq = (END_FREQ - START_FREQ) / numSamples;
     double timeStep = 1.0 / SAMPLING_RATE;
     double currentTime = 0.0;
 
@@ -33,7 +35,7 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
     static unsigned long frameIndex = 0;
 
     // Calculer la fréquence actuelle
-    double currentFreq = START_FREQ + (END_FREQ - START_FREQ) * frameIndex / (SAMPLING_RATE * DURATION);
+    double currentFreq = START_FREQ + (END_FREQ - START_FREQ) * frameIndex / framesPerBuffer;
     printf("Frequency: %.2f Hz\n", currentFreq);
 
     // Générer le signal
@@ -49,7 +51,7 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
 int main() {
     PaError err;
     PaStream *stream;
-    int numSamples = (int)(DURATION * SAMPLING_RATE);
+    int numSamples = 2000; // Remplace DURATION * SAMPLING_RATE
     double *signal = (double *)malloc(numSamples * sizeof(double));
 
     generateSignal(signal, numSamples);
@@ -82,7 +84,7 @@ int main() {
     printf("Enregistrement en cours...\n");
 
     // Attendre la fin de l'enregistrement
-    Pa_Sleep((unsigned long)(DURATION * 1000));
+    Pa_Sleep(5000); // Attendre 5000 millisecondes au lieu de DURATION * 1000
 
     // Arrêter et fermer le flux audio
     err = Pa_StopStream(stream);
