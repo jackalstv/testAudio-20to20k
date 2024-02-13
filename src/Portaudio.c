@@ -29,12 +29,13 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
 
     // Calculer la fréquence actuelle
     double currentFreq = START_FREQ + (END_FREQ - START_FREQ) * frameIndex / (SAMPLING_RATE * DURATION);
-    printf("Frequency: %.2f Hz\n", currentFreq);
+    //printf("Frequency: %.2f Hz\n", currentFreq);
 
     // Générer le signal
     for (unsigned long i = 0; i < framesPerBuffer; ++i) {
         *out++ = (float)(sin(2.0 * PI * currentFreq * i / SAMPLING_RATE));
         x[i]=*out;
+        y[i]=0;
     }
 
     frameIndex += framesPerBuffer;

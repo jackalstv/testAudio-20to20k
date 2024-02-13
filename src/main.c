@@ -3,7 +3,7 @@
 #include "../include/Portaudio.h"
 int isPress=0;
 float x[(int)END_FREQ- (int)START_FREQ + 1];
-int main() {
+int main(void) {
     FILE *gnuplot = popen("gnuplot", "w");
     PaError err;
     PaStream *stream;
@@ -34,12 +34,6 @@ int main() {
                                signal // pointer to data passed to callback
                                );
 
-    fprintf(gnuplot, "plot '-' u 1:2 t 'Price' w lp\n");
-    for (int i = 0; i < size; ++i) {
-        fprintf(gnuplot, "%f %d\n", x[i], 0);
-    }
-    fprintf(gnuplot, "e\n");
-
     if (err != paNoError) {
         fprintf(stderr, "Erreur lors de l'ouverture du flux audio: %s\n", Pa_GetErrorText(err));
         Pa_Terminate();
@@ -56,6 +50,12 @@ int main() {
     }
 
     printf("Enregistrement en cours...\n");
+
+
+    fprintf(gnuplot, "plot '-' u 1:2 t 'Price' w lp\n");
+    for (int i = 0; i < 6; ++i) {
+        fprintf(gnuplot, "%d %d\n", x[i], y[i]);
+    }
 
     // Attendre la fin de l'enregistrement
     Pa_Sleep((unsigned long)(DURATION * 1000));
@@ -79,5 +79,12 @@ int main() {
     // Libérer la mémoire
     free(signal);
 
-    return 0;
+    fprintf(gnuplot, "e\n");
+    fprintf(stdout, "Click Ctrl+d to quit...\n");
+    fflush(gnuplot);
+    getchar();
+
+    pclose(gnuplot);
+    exit(EXIT_SUCCESS);
+
 }
