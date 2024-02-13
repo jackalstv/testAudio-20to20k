@@ -3,6 +3,8 @@
 //
 #include "../include/Portaudio.h"
 
+
+
 void generateSignal(double *signal, int numSamples) {
     double deltaFreq = (END_FREQ - START_FREQ) / DURATION;
     double timeStep = 1.0 / SAMPLING_RATE;

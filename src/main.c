@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "../include/Portaudio.h"
-extern int isPress;
-extern float x[];
+int isPress=0;
+float x[(int)END_FREQ- (int)START_FREQ + 1];
 int main() {
     FILE *gnuplot = popen("gnuplot", "w");
     PaError err;
