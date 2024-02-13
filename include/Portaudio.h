@@ -9,6 +9,7 @@
 #include <portaudio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define PI 3.14159265358979323846
 
@@ -18,7 +19,7 @@
 #define SAMPLING_RATE 44100.0
 
 float x[(int)END_FREQ- (int)START_FREQ + 1];
-int y=0;
+int isPress=0;
 
 void generateSignal(double *signal, int numSamples);
 
