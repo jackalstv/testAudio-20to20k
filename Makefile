@@ -12,7 +12,7 @@ INCDIR = include
 
 # Options de compilation
 CFLAGS = -I$(INCDIR) -Wall
-LDFLAGS = -lportaudio
+LDFLAGS = -lportaudio -lm
 
 # Trouver tous les fichiers .c dans le dossier src (et sous-dossiers)
 SRC = $(wildcard $(SRCDIR)/*.c)
