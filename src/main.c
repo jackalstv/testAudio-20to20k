@@ -52,10 +52,6 @@ int main(void) {
     printf("Enregistrement en cours...\n");
 
 
-    fprintf(gnuplot, "plot '-' u 1:2 t 'Price' w lp\n");
-    for (int i = 0; i < 6; ++i) {
-        fprintf(gnuplot, "%d %d\n", x[i], y[i]);
-    }
 
     // Attendre la fin de l'enregistrement
     Pa_Sleep((unsigned long)(DURATION * 1000));
@@ -76,6 +72,10 @@ int main(void) {
 
     printf("Enregistrement terminé.\n");
 
+    fprintf(gnuplot, "plot '-' u 1:2 t 'Price' w lp\n");
+    for (int i = 0; i < size; ++i) {
+        fprintf(gnuplot, "%f %f\n", x[i], isPress[i]);
+    }
     // Libérer la mémoire
     free(signal);
 
