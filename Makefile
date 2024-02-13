@@ -26,7 +26,7 @@ all: $(BINDIR)/$(TARGET)
 # Lier les objets pour créer l'exécutable, placer dans bin/
 $(BINDIR)/$(TARGET): $(OBJ)
 	@mkdir -p $(BINDIR)
-	$(CC) $^ -o $@ $(LDFLAGS)
+	$(CC) $^ -o $@ $(LDFLAGS) -lportaudio -lm
 
 # Compiler les fichiers source en objets, placer dans obj/
 $(OBJDIR)/%.o: $(SRCDIR)/%.c

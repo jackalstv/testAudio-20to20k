@@ -18,6 +18,7 @@
 #define SAMPLING_RATE 44100.0
 
 float x[(int)END_FREQ- (int)START_FREQ + 1];
+int y=0;
 
 void generateSignal(double *signal, int numSamples);
 

@@ -1,4 +1,5 @@
-
+#include <stdlib.h>
+#include <stdio.h>
 #include "../include/Portaudio.h"
 
 int main() {
@@ -23,13 +24,13 @@ int main() {
     }
 
     // Ouvrir le flux audio
-    err = Pa_OpenDefaultStream(&stream, 0,
-                               1,
-                               paFloat32,
-                               SAMPLING_RATE,
-                               paFramesPerBufferUnspecified,
-                               paCallback,
-                               signal
+    err = Pa_OpenDefaultStream(&stream, 0, // no input channels
+                               1, // mono output 2 for stereo
+                               paFloat32, // 32-bit floating-point output
+                               SAMPLING_RATE, // sample rate in Hz (44100.0)
+                               paFramesPerBufferUnspecified, // frames per buffer
+                               paCallback, // callback function
+                               signal // pointer to data passed to callback
                                );
     if (err != paNoError) {
         fprintf(stderr, "Erreur lors de l'ouverture du flux audio: %s\n", Pa_GetErrorText(err));
