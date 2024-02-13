@@ -12,7 +12,7 @@ INCDIR = include
 
 # Options de compilation
 CFLAGS = -I$(INCDIR) -Wall
-LDFLAGS =
+LDFLAGS = -lportaudio -lm
 
 # Trouver tous les fichiers .c dans le dossier src (et sous-dossiers)
 SRC = $(wildcard $(SRCDIR)/*.c)
@@ -26,7 +26,7 @@ all: $(BINDIR)/$(TARGET)
 # Lier les objets pour créer l'exécutable, placer dans bin/
 $(BINDIR)/$(TARGET): $(OBJ)
 	@mkdir -p $(BINDIR)
-	$(CC) $^ -o $@ $(LDFLAGS) -lportaudio -lm
+	$(CC) $^ -o $@ $(LDFLAGS)
 
 # Compiler les fichiers source en objets, placer dans obj/
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
