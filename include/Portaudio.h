@@ -19,7 +19,7 @@
 #define SAMPLING_RATE 44100.0
 
 extern float x[];
-extern int isPress;
+extern float isPress;
 
 void generateSignal(double *signal, int numSamples);
 

@@ -35,7 +35,7 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
     for (unsigned long i = 0; i < framesPerBuffer; ++i) {
         *out++ = (float)(sin(2.0 * PI * currentFreq * i / SAMPLING_RATE));
         x[i]=*out;
-        y[i]=0;
+        isPress[i]=0;
     }
 
     frameIndex += framesPerBuffer;

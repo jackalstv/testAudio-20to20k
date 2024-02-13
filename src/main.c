@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "../include/Portaudio.h"
-int isPress=0;
+float isPress[(int)END_FREQ- (int)START_FREQ + 1];
 float x[(int)END_FREQ- (int)START_FREQ + 1];
 int main(void) {
     FILE *gnuplot = popen("gnuplot", "w");
