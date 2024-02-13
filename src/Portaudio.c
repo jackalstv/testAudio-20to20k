@@ -3,7 +3,7 @@
 //
 #include "../include/Portaudio.h"
 
-
+float x[(int)END_FREQ- (int)START_FREQ + 1];
 
 void generateSignal(double *signal, int numSamples) {
     double deltaFreq = (END_FREQ - START_FREQ) / DURATION;
@@ -34,6 +34,7 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
     // Générer le signal
     for (unsigned long i = 0; i < framesPerBuffer; ++i) {
         *out++ = (float)(sin(2.0 * PI * currentFreq * i / SAMPLING_RATE));
+        printf("%f\n", *out);
         x[i]=*out;
         isPress[i]=0;
     }

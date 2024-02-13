@@ -74,6 +74,7 @@ int main(void) {
 
     fprintf(gnuplot, "plot '-' u 1:2 t 'Price' w lp\n");
     for (int i = 0; i < size; ++i) {
+        printf("f%",x[i]);
         fprintf(gnuplot, "%f %f\n", x[i], isPress[i]);
     }
     // Libérer la mémoire
