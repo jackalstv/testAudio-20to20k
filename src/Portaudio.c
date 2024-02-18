@@ -3,7 +3,8 @@
 //
 #include "../include/Portaudio.h"
 
-float x[(int)END_FREQ- (int)START_FREQ + 1];
+int x[(int)END_FREQ- (int)START_FREQ + 1];
+int isPress[(int)END_FREQ- (int)START_FREQ + 1];
 
 
 // Fonction de rappel (callback) pour PortAudio
@@ -12,21 +13,25 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
                const PaStreamCallbackTimeInfo *timeInfo,
                PaStreamCallbackFlags statusFlags,
                void *userData) {
-    double *signal = (double *)userData;
+    //double *signal = (double *)userData;
     float *out = (float *)outputBuffer;
 
-    static unsigned long frameIndex = 0;
+    //static unsigned long frameIndex = 0;
+    int bouton;
 
     // Calculer la fréquence actuelle
-    double currentFreq = START_FREQ + (END_FREQ - START_FREQ) * frameIndex / (SAMPLING_RATE * DURATION);
+    //double currentFreq = START_FREQ + (END_FREQ - START_FREQ) * frameIndex / (SAMPLING_RATE * DURATION);
     //printf("Frequency: %.2f Hz\n", currentFreq);
-
+    int freq = (int)currentFreq;
     // Générer le signal
-    for (unsigned long i = 0; i < framesPerBuffer; ++i) {
+    for (unsigned long i = 0; i < framesPerBuffer; ++i) { // 0 to 44100
         *out++ = (float)(sin(2.0 * PI * currentFreq * i / SAMPLING_RATE));
-        printf("%lu\n", i);
-        x[i]=i;
-        isPress[i]=0;
+        if(x[i]!=freq){
+            x[i]=freq;
+            if(scanf("%d", &bouton)){
+                isPress[freq]=-1;
+            }
+        }
     }
 
     frameIndex += framesPerBuffer;

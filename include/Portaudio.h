@@ -18,8 +18,8 @@
 #define DURATION 20.0
 #define SAMPLING_RATE 44100.0
 
-extern float x[];
-extern float isPress[];
+extern int x[];
+extern int isPress[];
 
 void generateSignal(double *signal, int numSamples);
 
