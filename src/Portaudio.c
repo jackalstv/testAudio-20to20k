@@ -22,6 +22,7 @@ void* keyboardInput(void* arg) {
 
     }
     return NULL;
+    }
 }
 
 int paCallback(const void *inputBuffer, void *outputBuffer,
