@@ -43,12 +43,15 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
         *out++ = (float)(sin(2.0 * PI * currentFreq * i / SAMPLING_RATE));
         if(x[i]!=freq){
             x[i]=freq;
-            if(boutonPress==1){
-                isPress[i]=-1;
-            }else if(isPress[i]==-1 && boutonPress==1){
-                isPress[i]=0;
-            }else(boutonPress==0){
-                isPress[i]=0;
+            switch (boutonPress) {
+                case 1:
+                    isPress[i]=-1;
+                    break;
+                case 0:
+                    isPress[i]=0;
+                    break;
+                default:
+                    break;
             }
             printf("%i\n",isPress[i]);
         }
