@@ -3,17 +3,22 @@
 //
 #include "../include/Portaudio.h"
 #include <pthread.h>
+#include <stdio.h>
+
 
 int x[(int)END_FREQ- (int)START_FREQ + 1];
 int isPress[(int)END_FREQ- (int)START_FREQ + 1];
-bool boutonPress;
+int boutonPress=0;
 
 void* keyboardInput(void* arg) {
     char input[100];
     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
     pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
     while (1) {
-        if(scanf("%99s", input)){boutonPress=true;}
+        if(scanf("%99s", input)){
+            boutonPress=1;
+        }
+        boutonPress=0;
 
     }
     return NULL;
@@ -38,9 +43,11 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
         *out++ = (float)(sin(2.0 * PI * currentFreq * i / SAMPLING_RATE));
         if(x[i]!=freq){
             x[i]=freq;
-            if(boutonPress){
+            if(boutonPress==1){
                 isPress[i]=-1;
-            }else{
+            }else if(isPress[i]==-1 && boutonPress==1){
+                isPress[i]=0;
+            }else(boutonPress==0){
                 isPress[i]=0;
             }
             printf("%i\n",isPress[i]);

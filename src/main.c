@@ -70,6 +70,7 @@ int main(void) {
     Pa_Terminate();
 
     printf("Enregistrement terminé.\n");
+
     pthread_cancel(thread_id);
     pthread_join(thread_id, NULL);
 
@@ -77,9 +78,6 @@ int main(void) {
     for (int i = 0; i < size; ++i) {
         fprintf(gnuplot, "%d %d\n", x[i], isPress[i]);
     }
-    // Libérer la mémoire
-    free(signal);
-
 
     fprintf(gnuplot, "e\n");
     fprintf(stdout, "Click Ctrl+d to quit...\n");
