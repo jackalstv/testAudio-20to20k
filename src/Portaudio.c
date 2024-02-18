@@ -17,7 +17,7 @@ void* keyboardInput(void* arg) {
     while (1) {
         if(scanf("%99s", input)){
             boutonPress=1;
-        }else if(scanf("%99s", input) %% boutonPress==1)
+        }else if(scanf("%99s", input) && boutonPress==1)
         boutonPress=0;
 
     }
@@ -50,7 +50,6 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
                 isPress[i]=0;
             }
             printf("%i\n",isPress[i]);
-        }
     }
 
     frameIndex += framesPerBuffer;
