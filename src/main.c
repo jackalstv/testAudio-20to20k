@@ -11,7 +11,6 @@ int main(void) {
     int numSamples = (int)(DURATION * SAMPLING_RATE);
     double *signal = (double *)malloc(numSamples * sizeof(double));
 
-    //generateSignal(signal, numSamples);
 
     // Initialiser PortAudio
     err = Pa_Initialize();
