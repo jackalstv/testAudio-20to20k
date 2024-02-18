@@ -17,7 +17,7 @@ void* keyboardInput(void* arg) {
     while (1) {
         if(scanf("%99s", input)){
             boutonPress=1;
-        }else if(scanf("%99s", input) && boutonPress==1)
+        }else{
         boutonPress=0;
 
     }
@@ -46,7 +46,7 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
             }
             if(boutonPress==1){
                 isPress[i]=-1;
-            }else{
+            }else if(boutonPress=0 && isPress[i]==-1){
                 isPress[i]=0;
             }
             printf("%i\n",isPress[i]);
