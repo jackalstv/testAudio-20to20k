@@ -40,6 +40,8 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
             x[i]=freq;
             if(boutonPress){
                 isPress[i]=-1;
+            }else{
+                isPress[i]=0;
             }
         }
     }
