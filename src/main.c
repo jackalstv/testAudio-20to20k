@@ -12,7 +12,6 @@ int main(void) {
     double *signal = (double *)malloc(numSamples * sizeof(double));
 
     pthread_t thread_id;
-    pthread_create(&thread_id, NULL, keyboardInput, NULL);
 
     // Initialiser PortAudio
     err = Pa_Initialize();
@@ -49,6 +48,7 @@ int main(void) {
         Pa_Terminate();
         return 1;
     }
+    pthread_create(&thread_id, NULL, keyboardInput, NULL);
 
     printf("Enregistrement en cours...\n");
 
