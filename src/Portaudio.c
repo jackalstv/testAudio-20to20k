@@ -10,6 +10,8 @@ bool boutonPress;
 
 void* keyboardInput(void* arg) {
     char input[100];
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
     while (1) {
         if(scanf("%99s", input)){boutonPress=true;}
 
