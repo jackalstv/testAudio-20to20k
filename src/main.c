@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <pthread.h>
 #include "../include/Portaudio.h"
 
 int main(void) {
@@ -10,6 +11,8 @@ int main(void) {
     int numSamples = (int)(DURATION * SAMPLING_RATE);
     double *signal = (double *)malloc(numSamples * sizeof(double));
 
+    pthread_t thread_id;
+    pthread_create(&thread_id, NULL, keyboardInput, NULL);
 
     // Initialiser PortAudio
     err = Pa_Initialize();
@@ -74,6 +77,7 @@ int main(void) {
     }
     // Libérer la mémoire
     free(signal);
+    pthread_join(thread_id, NULL);
 
     fprintf(gnuplot, "e\n");
     fprintf(stdout, "Click Ctrl+d to quit...\n");

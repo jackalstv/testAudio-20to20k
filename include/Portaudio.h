@@ -22,6 +22,7 @@ extern int x[];
 extern int isPress[];
 
 void generateSignal(double *signal, int numSamples);
+void* keyboardInput(void* arg);
 
 int paCallback(const void *inputBuffer, void *outputBuffer,
                unsigned long framesPerBuffer,
