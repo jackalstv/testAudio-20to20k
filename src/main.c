@@ -70,8 +70,8 @@ int main(void) {
     Pa_Terminate();
 
     printf("Enregistrement terminé.\n");
-    pthread_cancel(thread);
-    pthread_join(thread, NULL);
+    pthread_cancel(thread_id);
+    pthread_join(thread_id, NULL);
 
     fprintf(gnuplot, "plot '-' u 1:2 t 'Price' w lp\n");
     for (int i = 0; i < size; ++i) {
