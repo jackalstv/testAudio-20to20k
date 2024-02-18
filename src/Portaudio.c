@@ -43,6 +43,7 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
             }else{
                 isPress[i]=0;
             }
+            printf("%i\n",isPress[i]);
         }
     }
 
