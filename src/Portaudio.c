@@ -15,13 +15,13 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
                void *userData) {
     //double *signal = (double *)userData;
     float *out = (float *)outputBuffer;
-
-    //static unsigned long frameIndex = 0;
+    static unsigned long frameIndex = 0;
     int bouton;
 
     // Calculer la fréquence actuelle
-    //double currentFreq = START_FREQ + (END_FREQ - START_FREQ) * frameIndex / (SAMPLING_RATE * DURATION);
+    double currentFreq = START_FREQ + (END_FREQ - START_FREQ) * frameIndex / (SAMPLING_RATE * DURATION); // 5 to 20000
     //printf("Frequency: %.2f Hz\n", currentFreq);
+
     int freq = (int)currentFreq;
     // Générer le signal
     for (unsigned long i = 0; i < framesPerBuffer; ++i) { // 0 to 44100
