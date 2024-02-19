@@ -2,9 +2,16 @@
 // Created by User on 2/13/2024.
 //
 #include "../include/Portaudio.h"
-#include <pthread.h>
-#include <stdio.h>
 #include "../include/kaybordact.h"
+#include <stdio.h>
+#include <portaudio.h>
+#include <math.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <pthread.h>
+#include <unistd.h>
+#include <termios.h>
+
 
 
 int x[(int)END_FREQ- (int)START_FREQ + 1];
@@ -12,11 +19,10 @@ int isPress[(int)END_FREQ- (int)START_FREQ + 1];
 int boutonPress=0;
 
 void* keyboardInput(void* arg) {
-    char input[100];
     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
     pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
     while (1) {
-        if(scanf("%99s", input)){
+        if(!isKeyPressed()){
             boutonPress=1;
         }else{
         boutonPress=0;
@@ -49,12 +55,13 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
         if(x[i]!=freq){
             x[i]=freq;
             }
-            if(!isKeyPressed()){
+            if(boutonPress==1){
                 isPress[i]=-1;
+            }else if(boutonPress==1 && isPress[i]==-1){
+                isPress[i]=0;
             }
             printf("%i\n",isPress[i]);
     }
-    restoreTerminal(&orig_term);
 
     frameIndex += framesPerBuffer;
 
