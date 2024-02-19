@@ -4,6 +4,7 @@
 #include "../include/Portaudio.h"
 #include <pthread.h>
 #include <stdio.h>
+#include "../include/kaybordact.h"
 
 
 int x[(int)END_FREQ- (int)START_FREQ + 1];
@@ -34,6 +35,9 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
     float *out = (float *)outputBuffer;
     static unsigned long frameIndex = 0;
 
+    struct termios orig_term;
+    configureTerminal(&orig_term);
+
     // Calculer la fréquence actuelle
     double currentFreq = START_FREQ + (END_FREQ - START_FREQ) * frameIndex / (SAMPLING_RATE * DURATION); // 5 to 20000
     //printf("Frequency: %.2f Hz\n", currentFreq);
@@ -45,13 +49,12 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
         if(x[i]!=freq){
             x[i]=freq;
             }
-            if(boutonPress==1){
+            if(!isKeyPressed()){
                 isPress[i]=-1;
-            }else if(boutonPress==1 && isPress[i]==-1){
-                isPress[i]=0;
             }
             printf("%i\n",isPress[i]);
     }
+    restoreTerminal(&orig_term);
 
     frameIndex += framesPerBuffer;
 
