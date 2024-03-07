@@ -5,6 +5,12 @@
 #include "../include/graphe.h"
 #include "../include/global.h"
 
+#define PI 3.14159265358979323846
+#define START_FREQ 20.0         // Fréquence de départ en Hz
+#define END_FREQ 20000.0        // Fréquence de fin en Hz
+#define SAMPLING_RATE 44100     // Taux d'échantillonnage
+#define DURATION 140.0
+
 extern volatile  int keyPressed;
 extern int isPress[20000-4];
 
@@ -82,6 +88,8 @@ int main(void) {
 
     pthread_cancel(thread_id);
     pthread_join(thread_id, NULL);
+
+    for(int i =0; i<19996;i++){printf("%d",isPress[i]);}
 
     generate_graph(isPress);
 
