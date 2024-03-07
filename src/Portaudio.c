@@ -36,6 +36,8 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
             isPress[i] = -1;
             // Marquez l'échantillon actuel comme ayant une touche pressée
             keyPressed = 0; // Réinitialiser le flag pour la prochaine pression
+        }else{
+            isPress[i] = 0;
         }
     }
 
