@@ -22,7 +22,7 @@
 #define DURATION 20.0
 #define SAMPLING_RATE 44100.0
 
-extern int isPress[];
+extern int *isPress[];
 
 void generateSignal(double *signal, int numSamples);
 void* keyboardInput(void* arg);

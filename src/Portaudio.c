@@ -9,7 +9,7 @@
 
 volatile int keyPressed = 0;
 
-int isPress[(int)END_FREQ- (int)START_FREQ + 1];
+int *isPress[(int)END_FREQ- (int)START_FREQ + 1];
 
 
 int paCallback(const void *inputBuffer, void *outputBuffer,
@@ -33,11 +33,11 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
     for (unsigned long i = 0; i < framesPerBuffer; ++i) { // 0 to 44100
         *out++ = (float)(sin(2.0 * PI * currentFreq * i / SAMPLING_RATE));
         if(keyPressed) {
-            isPress[i] = -1;
+            *isPress[i] = -1;
             // Marquez l'échantillon actuel comme ayant une touche pressée
             keyPressed = 0; // Réinitialiser le flag pour la prochaine pression
         }else{
-            isPress[i] = 0;
+            *isPress[i] = 0;
         }
     }
 
