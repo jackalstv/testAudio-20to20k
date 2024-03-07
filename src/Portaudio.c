@@ -9,7 +9,23 @@
 
 volatile int keyPressed = 0;
 
-int *isPress[(int)END_FREQ- (int)START_FREQ + 1];
+int *isPress; // Déclaration du pointeur vers le tableau
+
+
+int* initializeIsPressArray(int size) {
+    int *array = (int *)malloc(size * sizeof(int));
+    if (array == NULL) {
+        fprintf(stderr, "Erreur d'allocation de mémoire pour isPress\n");
+        return NULL; // Retourne NULL si l'allocation a échoué
+    }
+
+    // Initialiser le tableau à 0
+    for (int i = 0; i < size; ++i) {
+        array[i] = 0;
+    }
+
+    return array; // Retourne le pointeur vers le tableau initialisé
+}
 
 
 int paCallback(const void *inputBuffer, void *outputBuffer,
@@ -33,11 +49,9 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
     for (unsigned long i = 0; i < framesPerBuffer; ++i) { // 0 to 44100
         *out++ = (float)(sin(2.0 * PI * currentFreq * i / SAMPLING_RATE));
         if(keyPressed) {
-            *isPress[i] = -1;
+            isPress[i] = -1;
             // Marquez l'échantillon actuel comme ayant une touche pressée
             keyPressed = 0; // Réinitialiser le flag pour la prochaine pression
-        }else{
-            *isPress[i] = 0;
         }
     }
 

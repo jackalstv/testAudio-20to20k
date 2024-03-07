@@ -22,10 +22,7 @@
 #define DURATION 20.0
 #define SAMPLING_RATE 44100.0
 
-extern int *isPress[];
-
-void generateSignal(double *signal, int numSamples);
-void* keyboardInput(void* arg);
+int* initializeIsPressArray(int size);
 
 int paCallback(const void *inputBuffer, void *outputBuffer,
                unsigned long framesPerBuffer,

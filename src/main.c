@@ -5,16 +5,23 @@
 #include "../include/graphe.h"
 #include "../include/kaybordact.h"
 
-
+int numSamples = (int)(DURATION * SAMPLING_RATE);
 
    
 int main(void) {
+    int *isPress = NULL;
     FILE *gnuplot = popen("gnuplot", "w");
+    isPress=initializeIsPressArray(numSamples);
+
+    if (isPress == NULL) {
+        // Gestion d'erreur en cas d'échec de l'allocation
+        return 1;
+    }
+
     //volatile int keyPressed = 0; // Définition de la variable globale
     PaError err;
     PaStream *stream;
     //int size = (int)END_FREQ- (int)START_FREQ + 1;
-    int numSamples = (int)(DURATION * SAMPLING_RATE);
     double *signal = (double *)malloc(numSamples * sizeof(double));
 
     pthread_t thread_id;
@@ -83,6 +90,8 @@ int main(void) {
     pthread_join(thread_id, NULL);
 
     generate_graph(isPress);
+
+    free(isPress);
 
     fprintf(gnuplot, "e\n");
     fprintf(stdout, "Click Ctrl+d to quit...\n");

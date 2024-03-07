@@ -21,5 +21,5 @@
 
 
 extern volatile int keyPressed;
-
+extern volatile int *isPress = NULL; // Définition de isPress
 #endif //EGALISEUR_AUDIO_ADAPTATIF_GLOBAL_H
