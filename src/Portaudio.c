@@ -33,6 +33,7 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
     for (unsigned long i = 0; i < framesPerBuffer; ++i) { // 0 to 44100
         *out++ = (float)(sin(2.0 * PI * currentFreq * i / SAMPLING_RATE));
         if(keyPressed) {
+            isPress[i] = -1;
             // Marquez l'échantillon actuel comme ayant une touche pressée
             keyPressed = 0; // Réinitialiser le flag pour la prochaine pression
         }
