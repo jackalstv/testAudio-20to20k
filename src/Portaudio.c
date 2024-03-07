@@ -7,25 +7,9 @@
 #include <math.h>
 #include "../include/global.h"
 
-volatile int keyPressed = 0;
+extern volatile int keyPressed;
 
-int *isPress; // Déclaration du pointeur vers le tableau
-
-
-int* initializeIsPressArray(int size) {
-    int *array = (int *)malloc(size * sizeof(int));
-    if (array == NULL) {
-        fprintf(stderr, "Erreur d'allocation de mémoire pour isPress\n");
-        return NULL; // Retourne NULL si l'allocation a échoué
-    }
-
-    // Initialiser le tableau à 0
-    for (int i = 0; i < size; ++i) {
-        array[i] = 0;
-    }
-
-    return array; // Retourne le pointeur vers le tableau initialisé
-}
+extern int isPress[(int)END_FREQ- (int)START_FREQ + 1];
 
 
 int paCallback(const void *inputBuffer, void *outputBuffer,

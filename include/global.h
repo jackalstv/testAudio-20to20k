@@ -19,7 +19,6 @@
 #include <pthread.h>
 #include "../include/kaybordact.h"
 
-
-extern volatile int keyPressed;
-extern volatile int *isPress = NULL; // Définition de isPress
+volatile int keyPressed =0;
+int isPress[(int)END_FREQ- (int)START_FREQ + 1]= {0};
 #endif //EGALISEUR_AUDIO_ADAPTATIF_GLOBAL_H
