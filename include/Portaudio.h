@@ -22,7 +22,6 @@
 #define DURATION 20.0
 #define SAMPLING_RATE 44100.0
 
-int* initializeIsPressArray(int size);
 
 int paCallback(const void *inputBuffer, void *outputBuffer,
                unsigned long framesPerBuffer,

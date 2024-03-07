@@ -5,12 +5,9 @@
 #include <stdio.h>
 #include <portaudio.h>
 #include <math.h>
-#include "../include/global.h"
 
 extern volatile int keyPressed;
-
-extern int isPress[(int)END_FREQ- (int)START_FREQ + 1];
-
+int isPress[(int)END_FREQ- (int)START_FREQ + 1]= {0};
 
 int paCallback(const void *inputBuffer, void *outputBuffer,
                unsigned long framesPerBuffer,

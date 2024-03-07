@@ -3,9 +3,10 @@
 #include <pthread.h>
 #include "../include/Portaudio.h"
 #include "../include/graphe.h"
-#include "../include/kaybordact.h"
+#include "../include/global.h"
 
-extern int isPress[(int)END_FREQ- (int)START_FREQ + 1];
+extern volatile  int keyPressed;
+extern int isPress[20000-4];
 
 
 int main(void) {

@@ -3,7 +3,9 @@
 //
 
 #include "../include/kaybordact.h"
-#include "../include/global.h"
+
+extern volatile int keyPressed;
+
 int kbhit(void) {
     struct termios oldt, newt;
     int ch;

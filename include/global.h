@@ -19,6 +19,12 @@
 #include <pthread.h>
 #include "../include/kaybordact.h"
 
+#define START_FREQ 5.0
+#define END_FREQ 20000.0
+#define DURATION 20.0
+#define SAMPLING_RATE 44100.0
+
 volatile int keyPressed =0;
-int isPress[(int)END_FREQ- (int)START_FREQ + 1]= {0};
+
+
 #endif //EGALISEUR_AUDIO_ADAPTATIF_GLOBAL_H
