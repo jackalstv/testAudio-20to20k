@@ -2,19 +2,13 @@
 // Created by User on 2/13/2024.
 //
 #include "../include/Portaudio.h"
-#include "../include/kaybordact.h"
 #include <stdio.h>
 #include <portaudio.h>
 #include <math.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <pthread.h>
-#include <unistd.h>
-#include <termios.h>
+#include "../include/global.h"
 
+volatile int keyPressed = 0;
 
-
-int x[(int)END_FREQ- (int)START_FREQ + 1];
 int isPress[(int)END_FREQ- (int)START_FREQ + 1];
 
 
@@ -32,21 +26,16 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
 
     // Calculer la fréquence actuelle
     double currentFreq = START_FREQ + (END_FREQ - START_FREQ) * frameIndex / (SAMPLING_RATE * DURATION); // 5 to 20000
-    //printf("Frequency: %.2f Hz\n", currentFreq);
+    printf("Frequency: %.2f Hz\n", currentFreq);
 
-    int freq = (int)currentFreq;
+    //int freq = (int)currentFreq;
     // Générer le signal
     for (unsigned long i = 0; i < framesPerBuffer; ++i) { // 0 to 44100
         *out++ = (float)(sin(2.0 * PI * currentFreq * i / SAMPLING_RATE));
-        if(x[i]!=freq){
-            x[i]=freq;
-            }
-        if (kbhit()) {
-            isPress[i] = -1;
-        } else {
-            isPress[i] = 0;
+        if(keyPressed) {
+            // Marquez l'échantillon actuel comme ayant une touche pressée
+            keyPressed = 0; // Réinitialiser le flag pour la prochaine pression
         }
-        usleep(40000); // pause de 40 ms
     }
 
     frameIndex += framesPerBuffer;

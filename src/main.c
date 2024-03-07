@@ -3,18 +3,23 @@
 #include <pthread.h>
 #include "../include/Portaudio.h"
 #include "../include/graphe.h"
+#include "../include/kaybordact.h"
+
 
 
    
 int main(void) {
     FILE *gnuplot = popen("gnuplot", "w");
+    //volatile int keyPressed = 0; // Définition de la variable globale
     PaError err;
     PaStream *stream;
     //int size = (int)END_FREQ- (int)START_FREQ + 1;
     int numSamples = (int)(DURATION * SAMPLING_RATE);
     double *signal = (double *)malloc(numSamples * sizeof(double));
 
-    //pthread_t thread_id;
+    pthread_t thread_id;
+    pthread_create(&thread_id, NULL,checKeyPress, NULL);
+
 
     // Initialiser PortAudio
     err = Pa_Initialize();
@@ -74,8 +79,8 @@ int main(void) {
 
     printf("Enregistrement terminé.\n");
 
-    //pthread_cancel(thread_id);
-    //pthread_join(thread_id, NULL);
+    pthread_cancel(thread_id);
+    pthread_join(thread_id, NULL);
 
     generate_graph(isPress);
 

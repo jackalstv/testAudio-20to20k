@@ -3,7 +3,7 @@
 //
 
 #include "../include/kaybordact.h"
-
+#include "../include/global.h"
 int kbhit(void) {
     struct termios oldt, newt;
     int ch;
@@ -27,4 +27,14 @@ int kbhit(void) {
     }
 
     return 0; // aucune touche n'a été pressée
+}
+
+void* checKeyPress(void* arg) {
+    while(1) {
+        if(kbhit()) {
+            keyPressed = 1; // Marquer qu'une touche a été pressée
+            usleep(100000); // Délai pour éviter des multiples détections
+        }
+    }
+    return NULL;
 }

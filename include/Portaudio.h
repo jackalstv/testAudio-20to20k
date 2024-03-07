@@ -14,6 +14,7 @@
 #include "../include/kaybordact.h"
 
 
+
 #define PI 3.14159265358979323846
 
 #define START_FREQ 5.0
@@ -21,7 +22,6 @@
 #define DURATION 20.0
 #define SAMPLING_RATE 44100.0
 
-extern int x[];
 extern int isPress[];
 
 void generateSignal(double *signal, int numSamples);

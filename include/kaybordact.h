@@ -14,6 +14,7 @@
 
 
 int kbhit(void);
+void* checKeyPress(void* arg);
 
 
 
