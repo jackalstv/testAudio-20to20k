@@ -2,16 +2,19 @@
 #include <stdio.h>
 #include <pthread.h>
 #include "../include/Portaudio.h"
+#include "../include/graphe.h"
 
+
+   
 int main(void) {
     FILE *gnuplot = popen("gnuplot", "w");
     PaError err;
     PaStream *stream;
-    int size = (int)END_FREQ- (int)START_FREQ + 1;
+    //int size = (int)END_FREQ- (int)START_FREQ + 1;
     int numSamples = (int)(DURATION * SAMPLING_RATE);
     double *signal = (double *)malloc(numSamples * sizeof(double));
 
-    pthread_t thread_id;
+    //pthread_t thread_id;
 
     // Initialiser PortAudio
     err = Pa_Initialize();
@@ -48,7 +51,7 @@ int main(void) {
         Pa_Terminate();
         return 1;
     }
-    pthread_create(&thread_id, NULL, keyboardInput, NULL);
+    //pthread_create(&thread_id, NULL, keyboardInput, NULL);
 
     printf("Enregistrement en cours...\n");
 
@@ -71,13 +74,10 @@ int main(void) {
 
     printf("Enregistrement terminé.\n");
 
-    pthread_cancel(thread_id);
-    pthread_join(thread_id, NULL);
+    //pthread_cancel(thread_id);
+    //pthread_join(thread_id, NULL);
 
-    fprintf(gnuplot, "plot '-' u 1:2 t 'Price' w lp\n");
-    for (int i = 0; i < size; ++i) {
-        fprintf(gnuplot, "%d %d\n", x[i], isPress[i]);
-    }
+    generate_graph(isPress);
 
     fprintf(gnuplot, "e\n");
     fprintf(stdout, "Click Ctrl+d to quit...\n");

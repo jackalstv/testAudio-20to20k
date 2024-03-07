@@ -16,21 +16,7 @@
 
 int x[(int)END_FREQ- (int)START_FREQ + 1];
 int isPress[(int)END_FREQ- (int)START_FREQ + 1];
-int boutonPress=0;
 
-void* keyboardInput(void* arg) {
-    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
-    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
-    while (1) {
-        if(!isKeyPressed()){
-            boutonPress=1;
-        }else{
-        boutonPress=0;
-
-    }
-    return NULL;
-    }
-}
 
 int paCallback(const void *inputBuffer, void *outputBuffer,
                unsigned long framesPerBuffer,
@@ -41,8 +27,8 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
     float *out = (float *)outputBuffer;
     static unsigned long frameIndex = 0;
 
-    struct termios orig_term;
-    configureTerminal(&orig_term);
+    //struct termios orig_term;
+    //configureTerminal(&orig_term);
 
     // Calculer la fréquence actuelle
     double currentFreq = START_FREQ + (END_FREQ - START_FREQ) * frameIndex / (SAMPLING_RATE * DURATION); // 5 to 20000
@@ -55,12 +41,12 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
         if(x[i]!=freq){
             x[i]=freq;
             }
-            if(boutonPress==1){
-                isPress[i]=-1;
-            }else if(boutonPress==1 && isPress[i]==-1){
-                isPress[i]=0;
-            }
-            printf("%i\n",isPress[i]);
+        if (kbhit()) {
+            isPress[i] = -1;
+        } else {
+            isPress[i] = 0;
+        }
+        usleep(40000); // pause de 40 ms
     }
 
     frameIndex += framesPerBuffer;

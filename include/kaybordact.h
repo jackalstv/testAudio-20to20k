@@ -10,10 +10,10 @@
 #include <unistd.h>
 #include <termios.h>
 #include <stdbool.h>
+#include <fcntl.h>
 
-void configureTerminal(struct termios *orig_term);
-void restoreTerminal(struct termios *orig_term);
-bool isKeyPressed();
+
+int kbhit(void);
 
 
 
