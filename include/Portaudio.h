@@ -15,10 +15,10 @@
 
 #define PI 3.14159265358979323846
 
-int paCallback(const void *inputBuffer, void *outputBuffer,
+int paCallback(const void *inputBuffer,
+               void *outputBuffer,
                unsigned long framesPerBuffer,
-               const PaStreamCallbackTimeInfo *timeInfo,
-               PaStreamCallbackFlags statusFlags,
-               void *userData);
+               const PaStreamCallbackTimeInfo* timeInfo,
+               PaStreamCallbackFlags statusFlags, void *userData);
 
 #endif //EGALISEUR_AUDIO_ADAPTATIF_PORTAUDIO_H

@@ -4,7 +4,7 @@
 
 #include "../include/kaybordact.h"
 
-extern volatile int keyPressed;
+volatile int keyPressed=0;
 
 int kbhit(void) {
     struct termios oldt, newt;
@@ -38,5 +38,5 @@ void* checKeyPress(void* arg) {
             usleep(100000); // Délai pour éviter des multiples détections
         }
     }
-    return NULL;
+    //return NULL;
 }

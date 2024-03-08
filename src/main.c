@@ -5,13 +5,13 @@
 #include "../include/graphe.h"
 #include "../include/global.h"
 
-extern volatile  int keyPressed;
-extern int isPress[19980];
-extern freqIndex;
+extern volatile int keyPressed;
+int isPress[19980];
+extern int freqIndex;
 
 bool record;
 
-void keyboardInput(){
+void keyboardInput(void* arg){
     while(record){
         if(keyPressed) {
             if (freqIndex >= 0 && freqIndex < sizeof(isPress)/sizeof(isPress[0])) { // Vérification de la limite
@@ -20,13 +20,12 @@ void keyboardInput(){
                 keyPressed = 0; // Réinitialiser le flag pour la prochaine pression
             }
         } else {
-            int freqIndex = (int)currentFreq;
             if (freqIndex >= 0 && freqIndex < sizeof(isPress)/sizeof(isPress[0])) { // Vérification de la limite
                 isPress[freqIndex] = 0;
             }
-}
-    usleep(7000);//19980/140
-}
+        }
+        usleep(7000);//19980/140
+    }
 }
 
 int main(void) {
@@ -42,7 +41,7 @@ int main(void) {
     pthread_t thread_id;
     pthread_t thread_id2;
     pthread_create(&thread_id, NULL,checKeyPress, NULL);
-    
+
 
 
     // Initialiser PortAudio
@@ -107,7 +106,7 @@ int main(void) {
 
     pthread_cancel(thread_id);
     pthread_join(thread_id, NULL);
-    
+
     for(int i =0; i<19980;i++){printf("%d",isPress[i]);}
 
     generate_graph(isPress);

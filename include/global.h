@@ -23,11 +23,7 @@
 #define START_FREQ 20.0         // Fréquence de départ en Hz
 #define END_FREQ 20000.0        // Fréquence de fin en Hz
 #define SAMPLING_RATE 44100     // Taux d'échantillonnage
-#define DURATION 140.0  
-
-volatile  int keyPressed;
-int isPress[19980]={0};
-volatile int keyPressed =0;
+#define DURATION 140.0
 
 
 #endif //EGALISEUR_AUDIO_ADAPTATIF_GLOBAL_H
