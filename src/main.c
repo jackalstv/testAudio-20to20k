@@ -25,7 +25,7 @@ void keyboardInput(){
                 isPress[freqIndex] = 0;
             }
 }
-    usleep(7000);//19980/140 
+    usleep(7000);//19980/140
 }
 }
 
