@@ -19,11 +19,14 @@
 #include <pthread.h>
 #include "../include/kaybordact.h"
 
-#define START_FREQ 5.0
-#define END_FREQ 20000.0
-#define DURATION 20.0
-#define SAMPLING_RATE 44100.0
+#define PI 3.14159265358979323846
+#define START_FREQ 20.0         // Fréquence de départ en Hz
+#define END_FREQ 20000.0        // Fréquence de fin en Hz
+#define SAMPLING_RATE 44100     // Taux d'échantillonnage
+#define DURATION 140.0  
 
+volatile  int keyPressed;
+int isPress[19980]={0};
 volatile int keyPressed =0;
 
 

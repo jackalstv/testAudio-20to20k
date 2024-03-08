@@ -6,37 +6,50 @@
 #include <portaudio.h>
 #include <math.h>
 
+
 extern volatile int keyPressed;
-int isPress[(int)END_FREQ- (int)START_FREQ + 1]= {0};
+extern int isPress[19980];
+int freqIndex;
 
-int paCallback(const void *inputBuffer, void *outputBuffer,
-               unsigned long framesPerBuffer,
-               const PaStreamCallbackTimeInfo *timeInfo,
-               PaStreamCallbackFlags statusFlags,
-               void *userData) {
-    //double *signal = (double *)userData;
-    float *out = (float *)outputBuffer;
-    static unsigned long frameIndex = 0;
+void setfrep(int freq)
 
-    //struct termios orig_term;
-    //configureTerminal(&orig_term);
+typedef struct {
+    double currentTime;           // Temps actuel dans la progression de la fréquence
+    unsigned long lastPrintTime;  // Dernier temps où la fréquence a été imprimée
+    double left_phase;
+    double right_phase;  
+} paUserData;
 
-    // Calculer la fréquence actuelle
-    double currentFreq = START_FREQ + (END_FREQ - START_FREQ) * frameIndex / (SAMPLING_RATE * DURATION); // 5 to 20000
-    printf("Frequency: %.2f Hz\n", currentFreq);
+int paCallback(const void *inputBuffer, void *outputBuffer, unsigned long framesPerBuffer,
+               const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags statusFlags, void *userData) {
+    paUserData *data = (paUserData*)userData;
+    float *out = (float*)outputBuffer;
+    double timeStep = 1.0 / SAMPLING_RATE; // Temps par échantillon
 
-    //int freq = (int)currentFreq;
-    // Générer le signal
-    for (unsigned long i = 0; i < framesPerBuffer; ++i) { // 0 to 44100
-        *out++ = (float)(sin(2.0 * PI * currentFreq * i / SAMPLING_RATE));
-        if(keyPressed) {
-            isPress[i] = -1;
-            // Marquez l'échantillon actuel comme ayant une touche pressée
-            keyPressed = 0; // Réinitialiser le flag pour la prochaine pression
+    for(unsigned long i = 0; i < framesPerBuffer; i++) {
+        double progress = data->currentTime / DURATION; // Progression normalisée dans le temps [0, 1]
+        double expProgress = progress * progress * progress; // Accélération plus rapide avec la progression cubique
+
+        double currentFreq = START_FREQ + (END_FREQ - START_FREQ) * expProgress;
+        double phaseIncrement = (currentFreq * 2.0 * PI) * timeStep;
+
+        int freqIndex=(int)currentFreq;
+
+        data->right_phase += phaseIncrement;
+        data->left_phase += phaseIncrement;
+        while(data->phase >= 2.0 * PI) data->phase -= 2.0 * PI;
+            *out++ = (float)sin(data->right_phase); // Générer le signal sinusoïdal
+            *out++ = (float)sin(data->left_phase); // Générer le signal sinusoïdal
+            data->currentTime += timeStep;
+        if(data->currentTime > DURATION) data->currentTime = DURATION; // Empêcher le dépassement
+
+        // Afficher la fréquence environ toutes les secondes
+        if((unsigned long)data->currentTime != data->lastPrintTime && (unsigned long)data->currentTime % 1 == 0) {
+            printf("Current Frequency: %.2f Hz\n", currentFreq);
+            data->lastPrintTime = (unsigned long)data->currentTime;
         }
     }
 
-    frameIndex += framesPerBuffer;
-
     return paContinue;
 }
+
