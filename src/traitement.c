@@ -22,6 +22,7 @@ void traitementGraph(int * data){
                 }
             }
         }
+        i=v;
     }
     printf("Donnee formater \n");
 }
