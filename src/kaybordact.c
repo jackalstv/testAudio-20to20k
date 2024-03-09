@@ -4,8 +4,6 @@
 
 #include "../include/kaybordact.h"
 
-volatile int keyPressed=0;
-
 int kbhit(void) {
     struct termios oldt, newt;
     int ch;
@@ -29,4 +27,34 @@ int kbhit(void) {
     }
 
     return 0; // aucune touche n'a été pressée
+}
+
+void *keyboardInput(void* arg){
+    while(record) {
+        if(kbhit()) {
+            int ch = getchar(); // Lit la touche pressée
+            // Si 'q' ou 'Q' est pressé, pourrait être utilisé pour quitter
+            if (laFreq[0] >= 0 && laFreq[0] < sizeof(isPress)/sizeof(isPress[0])) {
+                switch(ch){
+                    case '1' :
+                        isPress[laFreq[0]] = -1;
+                        printf("Frequency: %d Hz marquée dans isPress\n", laFreq[0]);
+                        break;
+                    case '2' :
+                        isPress[laFreq[0]] = -2;
+                        printf("Frequency: %d Hz marquée dans isPress\n", laFreq[0]);
+                        break;
+                    case '3' :
+                        isPress[laFreq[0]] = -3;
+                        printf("Frequency: %d Hz marquée dans isPress\n", laFreq[0]);
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+        }
+
+    }
+    return NULL;
 }

@@ -1,7 +1,7 @@
 //
 // Created by User on 07/03/2024.
 //
-#define ARRAY_SIZE 19980
+
 #include "../include/graphe.h"
 
 void generate_graph(int *data) {

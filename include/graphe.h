@@ -11,6 +11,8 @@
 #include <termios.h>
 #include <fcntl.h>
 
+#include "global.h"
+
 void generate_graph(int *data);
 
 #endif //EGALISEUR_AUDIO_ADAPTATIF_GRAPHE_H

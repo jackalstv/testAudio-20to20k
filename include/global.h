@@ -24,6 +24,12 @@
 #define END_FREQ 20000.0        // Fréquence de fin en Hz
 #define SAMPLING_RATE 44100     // Taux d'échantillonnage
 #define DURATION 140.0
+#define ARRAY_SIZE 19980
+
+extern bool record;
+extern int isPress[ARRAY_SIZE];
+extern int laFreq[1];
+extern volatile int keyPressed;
 
 
 #endif //EGALISEUR_AUDIO_ADAPTATIF_GLOBAL_H

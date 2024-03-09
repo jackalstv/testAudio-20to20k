@@ -11,9 +11,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <pthread.h>
-#include "../include/kaybordact.h"
-
-#define PI 3.14159265358979323846
+#include "kaybordact.h"
+#include "global.h"
 
 int paCallback(const void *inputBuffer,
                void *outputBuffer,

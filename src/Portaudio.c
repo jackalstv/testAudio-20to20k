@@ -3,17 +3,6 @@
 //
 
 #include "../include/Portaudio.h"
-#include "../include/kaybordact.h"
-#include "../include/global.h"
-#include <stdio.h>
-#include <portaudio.h>
-#include <math.h>
-#include <stdlib.h>
-#include <stdbool.h>
-
-int laFreq[1]={0};
-
-void setfrep(int freq);
 
 typedef struct {
     double currentTime;           // Temps actuel dans la progression de la fréquence
@@ -22,7 +11,6 @@ typedef struct {
     double right_phase;
     double phase;
 } paUserData;
-
 
 int paCallback(const void *inputBuffer,
                void *outputBuffer,

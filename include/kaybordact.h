@@ -12,8 +12,11 @@
 #include <stdbool.h>
 #include <fcntl.h>
 
+#include "global.h"
 
 int kbhit(void);
+
+void *keyboardInput(void* arg);
 
 
 

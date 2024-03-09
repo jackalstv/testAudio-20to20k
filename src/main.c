@@ -1,34 +1,20 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <portaudio.h>
+#include <math.h>
+#include <stdbool.h>
+#include <unistd.h>
 #include <pthread.h>
 #include "../include/Portaudio.h"
 #include "../include/graphe.h"
 #include "../include/global.h"
 #include "../include/kaybordact.h"
+#include "../include/traitement.h"
 
-extern volatile int keyPressed;
-int isPress[19980];
-extern int laFreq[1];
-
-bool record;
-
-void *keyboardInput(void* arg){
-    while(record) {
-        if(kbhit()) {
-            int ch = getchar(); // Lit la touche pressée
-            // Si 'q' ou 'Q' est pressé, pourrait être utilisé pour quitter
-            if (ch == 'q' || ch == 'Q') {
-                break;
-            }
-            if (laFreq[0] >= 0 && laFreq[0] < sizeof(isPress)/sizeof(isPress[0])) {
-                isPress[laFreq[0]] = -1;
-                printf("Frequency: %d Hz marquée dans isPress\n", laFreq[0]);
-            }
-        }
-        usleep(7000); // Attente pour réduire la charge CPU
-    }
-    return NULL;
-}
+bool record = true;
+int isPress[ARRAY_SIZE]={0};
+int laFreq[1]={0};
+volatile int keyPressed=0;
 
 
 int main(void) {
@@ -40,12 +26,7 @@ int main(void) {
     int numSamples = (int)(DURATION * SAMPLING_RATE);
     double *signal = (double *)malloc(numSamples * sizeof(double));
 
-
-
     pthread_t thread_id2;
-
-
-
 
     // Initialiser PortAudio
     err = Pa_Initialize();
@@ -110,7 +91,7 @@ int main(void) {
     pthread_cancel(thread_id2);
     pthread_join(thread_id2, NULL);
 
-    for(int i =0; i<19980;i++){printf("%d",isPress[i]);}
+    traitementGraph(isPress);
 
     generate_graph(isPress);
 
