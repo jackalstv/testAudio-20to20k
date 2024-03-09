@@ -23,8 +23,9 @@ void traitementGraph(int *data) {
                     }
                 }
             }
+            i = v; // Utilisez v après avoir terminé la boucle interne
         }
-        i = v; // Utilisez v après avoir terminé la boucle interne
+
 
     }
     printf("Donnee formater \n");
