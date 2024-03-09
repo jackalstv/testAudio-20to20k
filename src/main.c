@@ -20,10 +20,6 @@ void *keyboardInput(void* arg){
                 printf("Frequency: %d Hz dans isPress %d : \n", laFreq[0], isPress[laFreq[0]]);
                 keyPressed = 0; // Réinitialiser le flag pour la prochaine pression
             }
-        } else {
-            if (laFreq[0] >= 0 && laFreq[0] < sizeof(isPress)/sizeof(isPress[0])) { // Vérification de la limite
-                isPress[laFreq[0]] = 0;
-            }
         }
         usleep(7000);//19980/140
         if(laFreq[0]==19980){

@@ -32,20 +32,14 @@ int kbhit(void) {
 }
 
 void* checKeyPress(void* arg) {
-    int lastState = 0; // État précédent de keyPressed
+    int lastState = 0; // État précédent pour détecter les changements
     while(1) {
-        int currentState = kbhit(); // Obtenir l'état actuel de la touche
-        if(currentState != lastState) { // Si l'état de la touche a changé
-            if(currentState == 1) {
-                // Touche pressée
-                keyPressed = 1;
-            } else {
-                // Touche relâchée
-                keyPressed = 0;
-            }
-            lastState = currentState; // Mettre à jour l'état précédent
+        int currentState = kbhit(); // Détecte si une touche est actuellement pressée
+        if(currentState != lastState) { // Si l'état a changé depuis la dernière vérification
+            keyPressed = currentState; // Met à jour l'état global keyPressed
+            lastState = currentState; // Met à jour lastState pour la prochaine comparaison
         }
-        usleep(10000); // Attente courte pour réduire la charge du CPU
+        usleep(10000); // Réduit la charge du CPU
     }
     return NULL;
 }
