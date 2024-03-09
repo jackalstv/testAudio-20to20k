@@ -8,7 +8,7 @@ void traitementGraph(int *data) {
     int v = 0; // Initialisez v pour éviter un comportement indéterminé
     int w = 0; // Initialisez w pour éviter un comportement indéterminé
     bool found = false; // Utilisez un booléen pour éviter les erreurs de logique
-    for (int i = 0; i < ARRAY_SIZE - 15; i++) {
+    for (int i = 0; i < ARRAY_SIZE - 40; i++) {
         switch(data[i]) {
             case -1:
                 w = -1;
@@ -27,7 +27,7 @@ void traitementGraph(int *data) {
         break;
         }
         if(found) { // Utilisez un booléen pour éviter les erreurs de logique
-            for (int u = i+1; u < 13; u++) {
+            for (int u = i+1; u < 35; u++) {
                 if (data[i] == w) {
                     for (int j = i + 1; j < u; j++) { // Corrigez la limite de tableau
                                 data[j] = w;
