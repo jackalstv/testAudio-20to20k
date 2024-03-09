@@ -1,69 +1,65 @@
 //
 // Created by User on 2/13/2024.
 //
+
 #include "../include/Portaudio.h"
 #include "../include/kaybordact.h"
+#include "../include/global.h"
 #include <stdio.h>
 #include <portaudio.h>
 #include <math.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <pthread.h>
-#include <unistd.h>
-#include <termios.h>
+
+int freqIndex;
 
 
+void setfrep(int freq);
 
-int x[(int)END_FREQ- (int)START_FREQ + 1];
-int isPress[(int)END_FREQ- (int)START_FREQ + 1];
-int boutonPress=0;
+typedef struct {
+    double currentTime;           // Temps actuel dans la progression de la fréquence
+    unsigned long lastPrintTime;  // Dernier temps où la fréquence a été imprimée
+    double left_phase;
+    double right_phase;
+    double phase;
+} paUserData;
 
-void* keyboardInput(void* arg) {
-    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
-    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
-    while (1) {
-        if(!isKeyPressed()){
-            boutonPress=1;
-        }else{
-        boutonPress=0;
 
-    }
-    return NULL;
-    }
-}
-
-int paCallback(const void *inputBuffer, void *outputBuffer,
+int paCallback(const void *inputBuffer,
+               void *outputBuffer,
                unsigned long framesPerBuffer,
-               const PaStreamCallbackTimeInfo *timeInfo,
-               PaStreamCallbackFlags statusFlags,
-               void *userData) {
-    //double *signal = (double *)userData;
-    float *out = (float *)outputBuffer;
-    static unsigned long frameIndex = 0;
+               const PaStreamCallbackTimeInfo* timeInfo,
+               PaStreamCallbackFlags statusFlags, void *userData) {
+    paUserData *data = (paUserData*)userData;
+    float *out = (float*)outputBuffer;
+    double timeStep = 1.0 / SAMPLING_RATE; // Temps par échantillon
 
-    struct termios orig_term;
-    configureTerminal(&orig_term);
+    for(unsigned long i = 0; i < framesPerBuffer; i++) {
+        double progress = data->currentTime / DURATION; // Progression normalisée dans le temps [0, 1]
+        double expProgress = progress * progress * progress; // Accélération plus rapide avec la progression cubique
 
-    // Calculer la fréquence actuelle
-    double currentFreq = START_FREQ + (END_FREQ - START_FREQ) * frameIndex / (SAMPLING_RATE * DURATION); // 5 to 20000
-    //printf("Frequency: %.2f Hz\n", currentFreq);
+        double currentFreq = START_FREQ + (END_FREQ - START_FREQ) * expProgress;
+        double phaseIncrement = (currentFreq * 2.0 * PI) * timeStep;
 
-    int freq = (int)currentFreq;
-    // Générer le signal
-    for (unsigned long i = 0; i < framesPerBuffer; ++i) { // 0 to 44100
-        *out++ = (float)(sin(2.0 * PI * currentFreq * i / SAMPLING_RATE));
-        if(x[i]!=freq){
-            x[i]=freq;
-            }
-            if(boutonPress==1){
-                isPress[i]=-1;
-            }else if(boutonPress==1 && isPress[i]==-1){
-                isPress[i]=0;
-            }
-            printf("%i\n",isPress[i]);
+        int freqIndex=(int)currentFreq;
+
+
+        data->phase += phaseIncrement;
+        data->right_phase += phaseIncrement;
+        data->left_phase += phaseIncrement;
+        while(data->phase >= 2.0 * PI) data->phase -= 2.0 * PI; // data
+        *out++ = (float)sin(data->right_phase); // Générer le signal sinusoïdal
+        *out++ = (float)sin(data->left_phase); // Générer le signal sinusoïdal
+        data->currentTime += timeStep;
+        if(data->currentTime > DURATION) data->currentTime = DURATION; // Empêcher le dépassement
+
+        // Afficher la fréquence environ toutes les secondes
+        if((unsigned long)data->currentTime != data->lastPrintTime && (unsigned long)data->currentTime % 1 == 0) {
+            printf("Current Frequency: %.2f Hz\n", currentFreq);
+            data->lastPrintTime = (unsigned long)data->currentTime;
+        }
     }
-
-    frameIndex += framesPerBuffer;
 
     return paContinue;
 }
+

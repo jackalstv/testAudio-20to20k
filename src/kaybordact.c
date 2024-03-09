@@ -4,23 +4,39 @@
 
 #include "../include/kaybordact.h"
 
-void configureTerminal(struct termios *orig_term) {
-    struct termios new_term;
-    tcgetattr(STDIN_FILENO, orig_term); // Sauvegarde les paramètres originaux
-    new_term = *orig_term;
-    new_term.c_lflag &= ~(ICANON | ECHO); // Désactive l'entrée canonique et l'écho
-    new_term.c_cc[VMIN] = 0;
-    new_term.c_cc[VTIME] = 0;
-    tcsetattr(STDIN_FILENO, TCSANOW, &new_term);
+volatile int keyPressed=0;
+
+int kbhit(void) {
+    struct termios oldt, newt;
+    int ch;
+    int oldf;
+
+    tcgetattr(STDIN_FILENO, &oldt); // sauvegarde les paramètres actuels du terminal
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO); // désactive le mode canonique et l'écho
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt); // applique les nouveaux paramètres
+    oldf = fcntl(STDIN_FILENO, F_GETFL, 0);
+    fcntl(STDIN_FILENO, F_SETFL, oldf | O_NONBLOCK); // rend la lecture non bloquante
+
+    ch = getchar();
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt); // restaure les paramètres du terminal
+    fcntl(STDIN_FILENO, F_SETFL, oldf); // restaure les paramètres de fichier
+
+    if(ch != EOF) {
+        ungetc(ch, stdin);
+        return 1; // une touche a été pressée
+    }
+
+    return 0; // aucune touche n'a été pressée
 }
 
-void restoreTerminal(struct termios *orig_term) {
-    tcsetattr(STDIN_FILENO, TCSANOW, orig_term); // Restaure les paramètres originaux
-}
-
-
-bool isKeyPressed() {
-    unsigned char touche;
-    int nbChars = read(STDIN_FILENO, &touche, 1); // Lit un caractère sans bloquer
-    return nbChars > 0; // Retourne true s'il y a un caractère, sinon false
+void* checKeyPress(void* arg) {
+    while(1) {
+        if(kbhit()) {
+            keyPressed = 1; // Marquer qu'une touche a été pressée
+            usleep(100000); // Délai pour éviter des multiples détections
+        }
+    }
+    //return NULL;
 }
