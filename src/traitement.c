@@ -28,14 +28,10 @@ void traitementGraph(int *data) {
         }
         if(found) { // Utilisez un booléen pour éviter les erreurs de logique
             for (int u = i+1; u < 13; u++) {
-                if (data[i] == -1 || data[i] == -2 || data[i] == -3) {
+                if (data[i] == w) {
                     for (int j = i + 1; j < u; j++) { // Corrigez la limite de tableau
-                        if (data[j] == w) {
-                            v = j;
-                            for (int o = i; o < j; o++) {
-                                data[o] = w;
+                                data[j] = w;
                             }
-                            break; // Quittez la boucle une fois que la valeur est trouvée
                         }
                     }
                 }
