@@ -33,13 +33,12 @@ void traitementGraph(int *data) {
                                 data[j] = w;
                             }
                         }
+                i = v; // Utilisez v après avoir terminé la boucle interne
                     }
                 }
             }
+            printf("Donnee formater \n");
         }
-            i = v; // Utilisez v après avoir terminé la boucle interne
-    }
-    printf("Donnee formater \n")
 }
 
 
