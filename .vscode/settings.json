@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "portaudio.h": "c",
-        "stdbool.h": "c",
-        "global.h": "c"
-    }
-}
