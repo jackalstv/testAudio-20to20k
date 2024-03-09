@@ -13,21 +13,23 @@ extern int laFreq[1];
 bool record;
 
 void *keyboardInput(void* arg){
-    while(record){
-        if(keyPressed) {
-            if (laFreq[0] >= 0 && laFreq[0] < sizeof(isPress)/sizeof(isPress[0])) { // Vérification de la limite
+    while(record) {
+        if(kbhit()) {
+            int ch = getchar(); // Lit la touche pressée
+            // Si 'q' ou 'Q' est pressé, pourrait être utilisé pour quitter
+            if (ch == 'q' || ch == 'Q') {
+                break;
+            }
+            if (laFreq[0] >= 0 && laFreq[0] < sizeof(isPress)/sizeof(isPress[0])) {
                 isPress[laFreq[0]] = -1;
-                printf("Frequency: %d Hz dans isPress %d : \n", laFreq[0], isPress[laFreq[0]]);
-                keyPressed = 0; // Réinitialiser le flag pour la prochaine pression
+                printf("Frequency: %d Hz marquée dans isPress\n", laFreq[0]);
             }
         }
-        usleep(7000);//19980/140
-        if(laFreq[0]==19980){
-            record=false;
-        }
+        usleep(7000); // Attente pour réduire la charge CPU
     }
     return NULL;
 }
+
 
 int main(void) {
     FILE *gnuplot = popen("gnuplot", "w");
@@ -39,9 +41,9 @@ int main(void) {
     double *signal = (double *)malloc(numSamples * sizeof(double));
 
 
-    pthread_t thread_id;
+
     pthread_t thread_id2;
-    pthread_create(&thread_id, NULL,checKeyPress, NULL);
+
 
 
 
@@ -105,8 +107,6 @@ int main(void) {
 
     printf("Enregistrement terminé.\n");
 
-    pthread_cancel(thread_id);
-    pthread_join(thread_id, NULL);
     pthread_cancel(thread_id2);
     pthread_join(thread_id2, NULL);
 

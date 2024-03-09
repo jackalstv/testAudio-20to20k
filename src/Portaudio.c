@@ -18,9 +18,9 @@ void setfrep(int freq);
 typedef struct {
     double currentTime;           // Temps actuel dans la progression de la fréquence
     unsigned long lastPrintTime;  // Dernier temps où la fréquence a été imprimée
-    //double left_phase;
+    double left_phase;
+    double right_phase;
     double phase;
-    int direction;
 } paUserData;
 
 
@@ -44,17 +44,20 @@ int paCallback(const void *inputBuffer,
 
         laFreq[0]=freqIndex;
 
+
+
         data->phase += phaseIncrement;
-        data->phase += phaseIncrement;
-        //data->left_phase += phaseIncrement;
+        data->right_phase += phaseIncrement;
+        data->left_phase += phaseIncrement;
         while(data->phase >= 2.0 * PI) data->phase -= 2.0 * PI; // data
-        *out++ = (float)sin(data->phase); // Générer le signal sinusoïdal
+        *out++ = (float)sin(data->right_phase); // Générer le signal sinusoïdal
+        *out++ = (float)sin(data->left_phase); // Générer le signal sinusoïdal
         data->currentTime += timeStep;
         if(data->currentTime > DURATION) data->currentTime = DURATION; // Empêcher le dépassement
 
         // Afficher la fréquence environ toutes les secondes
         if((unsigned long)data->currentTime != data->lastPrintTime && (unsigned long)data->currentTime % 1 == 0) {
-            printf("Current Frequency: %d Hz\n", (int)currentFreq);
+            printf("Current Frequency: %.2f Hz\n", currentFreq);
             data->lastPrintTime = (unsigned long)data->currentTime;
         }
     }
