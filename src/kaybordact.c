@@ -32,11 +32,18 @@ int kbhit(void) {
 }
 
 void* checKeyPress(void* arg) {
-    while(kbhit()) {
+    while(1) {
+        if(kbhit()) {
             keyPressed = 1; // Marquer qu'une touche a été pressée
             usleep(100000); // Délai pour éviter des multiples détections
             usleep(100000); // Délai pour éviter des multiples détections
-    keyPressed = 0;
+            if(!kbhit()) {
+                keyPressed = 0; // Réinitialiser le flag si la touche est toujours pressée
+            }
+        }else {
+            keyPressed = 0;
+        }
+    }
+    }
     return NULL;
-}
 }
