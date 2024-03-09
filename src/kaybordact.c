@@ -44,6 +44,5 @@ void* checKeyPress(void* arg) {
             keyPressed = 0;
         }
     }
-    }
     return NULL;
 }
