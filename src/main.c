@@ -4,28 +4,29 @@
 #include "../include/Portaudio.h"
 #include "../include/graphe.h"
 #include "../include/global.h"
+#include "../include/kaybordact.h"
 
 extern volatile int keyPressed;
 int isPress[19980];
-extern int freqIndex;
+extern int laFreq[1];
 
 bool record;
 
 void keyboardInput(void* arg){
     while(record){
         if(keyPressed) {
-            if (freqIndex >= 0 && freqIndex < sizeof(isPress)/sizeof(isPress[0])) { // Vérification de la limite
-                isPress[freqIndex] = -1;
-                printf("Frequency: %d Hz dans isPress %d : \n", freqIndex, isPress[freqIndex]);
+            if (laFreq[0] >= 0 && laFreq[0] < sizeof(isPress)/sizeof(isPress[0])) { // Vérification de la limite
+                isPress[laFreq[0]] = -1;
+                printf("Frequency: %d Hz dans isPress %d : \n", laFreq[0], isPress[freqIndex]);
                 keyPressed = 0; // Réinitialiser le flag pour la prochaine pression
             }
         } else {
-            if (freqIndex >= 0 && freqIndex < sizeof(isPress)/sizeof(isPress[0])) { // Vérification de la limite
-                isPress[freqIndex] = 0;
+            if (laFreq[0] >= 0 && laFreq[0] < sizeof(isPress)/sizeof(isPress[0])) { // Vérification de la limite
+                isPress[laFreq[0]] = 0;
             }
         }
         usleep(7000);//19980/140
-        if(freqIndex==19980){
+        if(laFreq[0]==19980){
             record=false;
         }
     }

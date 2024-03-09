@@ -11,8 +11,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-int freqIndex;
-
+int laFreq[1]={0};
 
 void setfrep(int freq);
 
@@ -42,6 +41,8 @@ int paCallback(const void *inputBuffer,
         double phaseIncrement = (currentFreq * 2.0 * PI) * timeStep;
 
         int freqIndex=(int)currentFreq;
+
+        laFreq[0]=freqIndex;
 
 
         data->phase += phaseIncrement;
