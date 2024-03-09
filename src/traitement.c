@@ -37,8 +37,7 @@ void traitementGraph(int *data) {
                     }
                 }
             }
-            printf("Donnee formater \n");
-        }
+    printf("Donnee formater \n");
 }
 
 
