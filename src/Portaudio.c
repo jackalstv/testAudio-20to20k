@@ -42,8 +42,7 @@ int paCallback(const void *inputBuffer,
 
         int freqIndex=(int)currentFreq;
 
-        laFreq[0]=freqIndex;
-
+        laFreq[1]=freqIndex;
 
         data->phase += phaseIncrement;
         data->right_phase += phaseIncrement;

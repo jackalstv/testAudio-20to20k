@@ -5,7 +5,6 @@
 #include "../include/graphe.h"
 #include "../include/global.h"
 #include "../include/kaybordact.h"
-
 extern volatile int keyPressed;
 int isPress[19980];
 extern int laFreq[1];
@@ -111,6 +110,8 @@ int main(void) {
 
     pthread_cancel(thread_id);
     pthread_join(thread_id, NULL);
+    pthread_cancel(thread_id2);
+    pthread_join(thread_id2, NULL);
 
     for(int i =0; i<19980;i++){printf("%d",isPress[i]);}
 
