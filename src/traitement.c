@@ -10,15 +10,15 @@ void traitementGraph(int * data){
 
     for(int i = 0; i < ARRAY_SIZE; i++) {
         if(data[i]==-1) {
-            for (int j = i; j < ARRAY_SIZE; j++) {
-                if (data[j] == -1 && (j - i) > 14) {
+            for (int j = i; j < 14; j++) {
+                if (data[j] == -1){
                     v = j;
                     break;
                 }
             }
-            for (int j = 1; j < v; j++) {
-                if (data[j] == 0) {
-                    data[j] = -1;
+            for (int w=i;w < v;w++) {
+                if (data[w] == 0) {
+                    data[w] = -1;
                 }
             }
         }
