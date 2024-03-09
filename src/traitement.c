@@ -6,33 +6,41 @@
 
 void traitementGraph(int * data){
 
-    int v;
-
-    for(int i = 0; i < ARRAY_SIZE; i++) {
-        if((data[i]==-1 || data[i]==-2 || data[i]==-3) && i<ARRAY_SIZE-13){
-            for (int j = i; j < 14; j++) {
-                if (data[j]==-1 || data[j]==-2 || data[j]==-3){
-                    v = j;
-                    break;
+    for(int i = 0; i < ARRAY_SIZE-15; i++) {
+        for(int w= -1; w > -4; w--){
+            if(data[i]==w && data[i+1]==0 && data[i+2]==0 && data[i+3]==0 && data[i+4]==0 && data[i+5]==0 && data[i+6]==0 && data[i+7]==0 && data[i+8]==0 && data[i+9]==0 && data[i+10]==0 && data[i+11]==0 && data[i+12]==w){
+                for(int j = i; j < 13; j++){
+                    data[i+j]=w;
                 }
+                i=i+12;
             }
-            for (int w=i;w < v;w++) {
-                switch (data[w]) {
-                    case -1:
-                        data[w] = -1;
-                        break;
-                    case -2:
-                        data[w] = -2;
-                        break;
-                    case -3:
-                        data[w] = -3;
-                        break;
-                    default:
-                        break;
+            if(data[i]==w && data[i+1]==0 && data[i+2]==0 && data[i+3]==0 && data[i+4]==0 && data[i+5]==0 && data[i+6]==0 && data[i+7]==0 && data[i+8]==0 && data[i+9]==0 && data[i+10]==0 && data[i+11]==w){
+                for(int j = i; j < 12; j++){
+                    data[i+j]=w;
                 }
+                i=i+11;
             }
-        }
-        i=v;
+            if(data[i]==w && data[i+1]==0 && data[i+2]==0 && data[i+3]==0 && data[i+4]==0 && data[i+5]==0 && data[i+6]==0 && data[i+7]==0 && data[i+8]==0 && data[i+9]==0 && data[i+10]==w){
+                for(int j = i; j < 11; j++){
+                    data[i+j]=w;
+                }
+                i=i+10;
+            }
+            if(data[i]==w && data[i+1]==0 && data[i+2]==0 && data[i+3]==0 && data[i+4]==0 && data[i+5]==0 && data[i+6]==0 && data[i+7]==0 && data[i+8]==0 && data[i+9]==w){
+                for(int j = i; j < 10; j++){
+                    data[i+j]=w;
+                }
+                i=i+9;
+                }
+            if(data[i]==-1 && data[i+1]==0 && data[i+2]==0 && data[i+3]==0 && data[i+4]==0 && data[i+5]==-1){
+                data[i+1]=-1;
+                data[i+2]=-1;
+                data[i+3]=-1;
+                data[i+4]=-1;
+                i=i+5;
+            }
     }
+
+        }
     printf("Donnee formater \n");
 }
