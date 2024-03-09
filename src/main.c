@@ -12,12 +12,12 @@ extern int laFreq[1];
 
 bool record;
 
-void keyboardInput(void* arg){
+void * keyboardInput(void* arg){
     while(record){
         if(keyPressed) {
             if (laFreq[0] >= 0 && laFreq[0] < sizeof(isPress)/sizeof(isPress[0])) { // Vérification de la limite
                 isPress[laFreq[0]] = -1;
-                printf("Frequency: %d Hz dans isPress %d : \n", laFreq[0], isPress[freqIndex]);
+                printf("Frequency: %d Hz dans isPress %d : \n", laFreq[0], isPress[laFreq[0]]);
                 keyPressed = 0; // Réinitialiser le flag pour la prochaine pression
             }
         } else {
@@ -30,6 +30,7 @@ void keyboardInput(void* arg){
             record=false;
         }
     }
+    return NULL;
 }
 
 int main(void) {

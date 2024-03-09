@@ -38,5 +38,5 @@ void* checKeyPress(void* arg) {
             usleep(100000); // Délai pour éviter des multiples détections
         }
     }
-    //return NULL;
+    return NULL;
 }
