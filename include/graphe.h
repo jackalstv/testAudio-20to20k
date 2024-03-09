@@ -11,7 +11,7 @@
 #include <termios.h>
 #include <fcntl.h>
 
-#include "global.h"51
+#include "global.h"
 
 void generate_graph(int *data);
 
