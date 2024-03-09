@@ -20,7 +20,8 @@ typedef struct {
     unsigned long lastPrintTime;  // Dernier temps où la fréquence a été imprimée
     double left_phase;
     double right_phase;
-    double phase;
+    double phase;                 // Phase actuelle du signal
+    int direction;                // Direction de la progression de la fréquence (0 = droite, 1 = gauche)
 } paUserData;
 
 
@@ -34,6 +35,11 @@ int paCallback(const void *inputBuffer,
     double timeStep = 1.0 / SAMPLING_RATE; // Temps par échantillon
 
     for(unsigned long i = 0; i < framesPerBuffer; i++) {
+        if (data->direction == 0 && laFreq[0] >= 20000) {
+            data->direction = 1; // Changer la direction vers la gauche
+            data->currentTime = 0; // Réinitialiser le temps pour la lecture de gauche
+        }
+
         double progress = data->currentTime / DURATION; // Progression normalisée dans le temps [0, 1]
         double expProgress = progress * progress * progress; // Accélération plus rapide avec la progression cubique
 
@@ -42,14 +48,14 @@ int paCallback(const void *inputBuffer,
 
         int freqIndex=(int)currentFreq;
 
-        laFreq[1]=freqIndex;
+        laFreq[0]=freqIndex;
 
         data->phase += phaseIncrement;
-        data->right_phase += phaseIncrement;
-        data->left_phase += phaseIncrement;
+        data->left_phase += (data->direction == 1) ? data->phase : 0;
+        data->right_phase += (data->direction == 0) ? data->phase : 0;
         while(data->phase >= 2.0 * PI) data->phase -= 2.0 * PI; // data
-        *out++ = (float)sin(data->right_phase); // Générer le signal sinusoïdal
-        *out++ = (float)sin(data->left_phase); // Générer le signal sinusoïdal
+            *out++ = (float)sin(data->right_phase); // Générer le signal sinusoïdal
+            *out++ = (float)sin(data->left_phase); // Générer le signal sinusoïdal
         data->currentTime += timeStep;
         if(data->currentTime > DURATION) data->currentTime = DURATION; // Empêcher le dépassement
 

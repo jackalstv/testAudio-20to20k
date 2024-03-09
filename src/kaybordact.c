@@ -32,16 +32,20 @@ int kbhit(void) {
 }
 
 void* checKeyPress(void* arg) {
+    int lastState = 0; // État précédent de keyPressed
     while(1) {
-        if(kbhit()) {
-            keyPressed = 1; // Marquer qu'une touche a été pressée
-            usleep(100000); // Délai pour éviter des multiples détections
-            if(!kbhit()) {
-                keyPressed = 0; // Réinitialiser le flag si la touche est toujours pressée
+        int currentState = kbhit(); // Obtenir l'état actuel de la touche
+        if(currentState != lastState) { // Si l'état de la touche a changé
+            if(currentState == 1) {
+                // Touche pressée
+                keyPressed = 1;
+            } else {
+                // Touche relâchée
+                keyPressed = 0;
             }
-        }else {
-            keyPressed = 0;
+            lastState = currentState; // Mettre à jour l'état précédent
         }
+        usleep(10000); // Attente courte pour réduire la charge du CPU
     }
     return NULL;
 }
