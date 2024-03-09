@@ -36,7 +36,6 @@ void* checKeyPress(void* arg) {
         if(kbhit()) {
             keyPressed = 1; // Marquer qu'une touche a été pressée
             usleep(100000); // Délai pour éviter des multiples détections
-            usleep(100000); // Délai pour éviter des multiples détections
             if(!kbhit()) {
                 keyPressed = 0; // Réinitialiser le flag si la touche est toujours pressée
             }

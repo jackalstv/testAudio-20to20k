@@ -55,7 +55,7 @@ int paCallback(const void *inputBuffer,
 
         // Afficher la fréquence environ toutes les secondes
         if((unsigned long)data->currentTime != data->lastPrintTime && (unsigned long)data->currentTime % 1 == 0) {
-            printf("Current Frequency: %.2f Hz\n", currentFreq);
+            printf("Current Frequency: %d Hz\n", (int)currentFreq);
             data->lastPrintTime = (unsigned long)data->currentTime;
         }
     }

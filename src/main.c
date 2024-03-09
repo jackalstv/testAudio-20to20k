@@ -5,13 +5,14 @@
 #include "../include/graphe.h"
 #include "../include/global.h"
 #include "../include/kaybordact.h"
+
 extern volatile int keyPressed;
 int isPress[19980];
 extern int laFreq[1];
 
 bool record;
 
-void * keyboardInput(void* arg){
+void *keyboardInput(void* arg){
     while(record){
         if(keyPressed) {
             if (laFreq[0] >= 0 && laFreq[0] < sizeof(isPress)/sizeof(isPress[0])) { // Vérification de la limite
