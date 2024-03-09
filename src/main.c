@@ -25,6 +25,9 @@ void keyboardInput(void* arg){
             }
         }
         usleep(7000);//19980/140
+        if(freqIndex==19980){
+            record=false;
+        }
     }
 }
 
@@ -85,7 +88,7 @@ int main(void) {
     // Attendre la fin de l'enregistrement
     record=true;
     pthread_create(&thread_id2, NULL, keyboardInput, NULL);
-    //Pa_Sleep((unsigned long)(DURATION * 1000));
+    Pa_Sleep((unsigned long)(DURATION * 1000));
     record=false;
 
     // Arrêter et fermer le flux audio
