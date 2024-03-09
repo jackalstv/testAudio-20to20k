@@ -42,12 +42,12 @@ int paCallback(const void *inputBuffer,
         *out++ = (float)sin(data->left_phase); // Générer le signal sinusoïdal
         data->currentTime += timeStep;
         if(data->currentTime > DURATION) data->currentTime = DURATION; // Empêcher le dépassement
-
+/*
         // Afficher la fréquence environ toutes les secondes
         if((unsigned long)data->currentTime != data->lastPrintTime && (unsigned long)data->currentTime % 1 == 0) {
             printf("Current Frequency: %.2f Hz\n", currentFreq);
             data->lastPrintTime = (unsigned long)data->currentTime;
-        }
+        }*/
     }
 
     return paContinue;
