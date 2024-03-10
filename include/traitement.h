@@ -13,6 +13,8 @@
 
 void traitementGraph(int *data);
 
+void remplacerZeros(int *liste, int taille);
+
 
 
 #endif //EGALISEUR_AUDIO_ADAPTATIF_TRAITEMENT_H
