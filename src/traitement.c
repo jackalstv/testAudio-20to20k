@@ -18,6 +18,13 @@ void traitementGraph(int *liste, int taille) {
                 if (liste[j] == 0) {
                     count++;
                 } else if (liste[j] == -1 || liste[j] == -2 || liste[j] == -3) {
+                    if (count <= 40) {
+                        // Remplacer les zéros par la valeur limite
+                        while (count > 0) {
+                            liste[j - count] = liste[i];
+                            count--;
+                        }
+                    }
                     break; // On a rencontré la limite
                 } else {
                     if (count <= 40) {
@@ -28,6 +35,17 @@ void traitementGraph(int *liste, int taille) {
                         }
                     }
                     break;
+                }
+            }
+
+            // Si la boucle se termine sans rencontrer de limite,
+            // remplacer les zéros jusqu'à la fin de la liste
+            if (j == taille) {
+                if (count <= 40) {
+                    while (count > 0 && j - count >= 0) {
+                        liste[j - count] = liste[i];
+                        count--;
+                    }
                 }
             }
         }
