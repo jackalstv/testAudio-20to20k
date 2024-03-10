@@ -91,9 +91,7 @@ int main(void) {
     pthread_cancel(thread_id2);
     pthread_join(thread_id2, NULL);
 
-    //traitementGraph(isPress);
-
-    remplacerZeros(isPress, ARRAY_SIZE);
+    traitementGraph(isPress, ARRAY_SIZE);
 
     generate_graph(isPress);
 

@@ -11,9 +11,7 @@
 
 #include "./global.h"
 
-void traitementGraph(int *data);
-
-void remplacerZeros(int *liste, int taille);
+void traitementGraph(int *liste, int taille);
 
 
 
