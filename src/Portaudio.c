@@ -32,14 +32,10 @@ int paCallback(const void *inputBuffer,
 
         laFreq[0]=freqIndex;
 
-
-
         data->phase += phaseIncrement;
-        data->right_phase += phaseIncrement;
-        data->left_phase += phaseIncrement;
+
         while(data->phase >= 2.0 * PI) data->phase -= 2.0 * PI; // data
-        *out++ = (float)sin(data->right_phase); // Générer le signal sinusoïdal
-        *out++ = (float)sin(data->left_phase); // Générer le signal sinusoïdal
+        *out++ = (float)sin(data->phase); // Générer le signal sinusoïdal
         data->currentTime += timeStep;
         if(data->currentTime > DURATION) data->currentTime = DURATION; // Empêcher le dépassement
 /*

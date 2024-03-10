@@ -41,7 +41,7 @@ int main(void) {
     }
     // Ouvrir le flux audio
     err = Pa_OpenDefaultStream(&stream, 0, // no input channels
-                               2, // mono output 2 for stereo
+                               1, // mono output 2 for stereo
                                paFloat32, // 32-bit floating-point output
                                SAMPLING_RATE, // sample rate in Hz (44100.0)
                                paFramesPerBufferUnspecified, // frames per buffer
