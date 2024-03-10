@@ -13,15 +13,15 @@ typedef struct {
 } paUserData;
 
 int paCallback(const void *inputBuffer,
-               void *outputBuffer,
-               unsigned long framesPerBuffer,
-               const PaStreamCallbackTimeInfo* timeInfo,
+               void *outputBuffer, // Pointeur vers le buffer de sortie (stéréo)
+               unsigned long framesPerBuffer, // Nombre d'échantillons par buffer
+               const PaStreamCallbackTimeInfo* timeInfo, // Informations temporelles
                PaStreamCallbackFlags statusFlags, void *userData) {
-    paUserData *data = (paUserData*)userData;
-    float *out = (float*)outputBuffer;
+    paUserData *data = (paUserData*)userData; // Récupérer les données utilisateur
+    float *out = (float*)outputBuffer; // Pointeur vers le buffer de sortie (stéréo)
     double timeStep = 1.0 / SAMPLING_RATE; // Temps par échantillon
 
-    for(unsigned long i = 0; i < framesPerBuffer; i++) {
+    for(unsigned long i = 0; i < framesPerBuffer; i++) { // Parcours de chaque échantillon
         double progress = data->currentTime / DURATION; // Progression normalisée dans le temps [0, 1]
         double expProgress = progress * progress * progress; // Accélération plus rapide avec la progression cubique
 
