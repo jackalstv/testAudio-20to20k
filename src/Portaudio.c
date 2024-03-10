@@ -25,8 +25,8 @@ int paCallback(const void *inputBuffer,
         double progress = data->currentTime / DURATION; // Progression normalisée dans le temps [0, 1]
         double expProgress = progress * progress * progress; // Accélération plus rapide avec la progression cubique
 
-        double currentFreq = START_FREQ + (END_FREQ - START_FREQ) * expProgress;
-        double phaseIncrement = (currentFreq * 2.0 * PI) * timeStep;
+        double currentFreq = START_FREQ + (END_FREQ - START_FREQ) * expProgress;  // Fréquence actuelle
+        double phaseIncrement = (currentFreq * 2.0 * PI) * timeStep; // Incrément de phase
 
         int freqIndex=(int)currentFreq;
 
