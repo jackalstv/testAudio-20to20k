@@ -30,8 +30,7 @@ int kbhit(void) {
 void *keyboardInput(void* arg){
     while(record) {
         if(kbhit()) {
-            int ch = getchar(); // Lit la touche pressée
-            // Si 'q' ou 'Q' est pressé, pourrait être utilisé pour quitter
+            int ch = getchar();
             if (laFreq[0] >= 0 && laFreq[0] < sizeof(isPress)/sizeof(isPress[0])) {
                 switch(ch){
                     case '1' :
