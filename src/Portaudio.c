@@ -5,28 +5,28 @@
 #include "../include/Portaudio.h"
 
 typedef struct {
-    double currentTime;           // Temps actuel dans la progression de la fréquence
-    unsigned long lastPrintTime;  // Dernier temps où la fréquence a été imprimée
+    double currentTime;
+    unsigned long lastPrintTime;
     double left_phase;
     double right_phase;
     double phase;
 } paUserData;
 
 int paCallback(const void *inputBuffer,
-               void *outputBuffer, // Pointeur vers le buffer de sortie (stéréo)
+               void *outputBuffer,
                unsigned long framesPerBuffer, // Nombre d'échantillons par buffer
-               const PaStreamCallbackTimeInfo* timeInfo, // Informations temporelles
+               const PaStreamCallbackTimeInfo* timeInfo,
                PaStreamCallbackFlags statusFlags, void *userData) {
-    paUserData *data = (paUserData*)userData; // Récupérer les données utilisateur
-    float *out = (float*)outputBuffer; // Pointeur vers le buffer de sortie (stéréo)
+    paUserData *data = (paUserData*)userData;
+    float *out = (float*)outputBuffer;
     double timeStep = 1.0 / SAMPLING_RATE; // Temps par échantillon
 
-    for(unsigned long i = 0; i < framesPerBuffer; i++) { // Parcours de chaque échantillon
+    for(unsigned long i = 0; i < framesPerBuffer; i++) {
         double progress = data->currentTime / DURATION; // Progression normalisée dans le temps [0, 1]
-        double expProgress = progress * progress * progress; // Accélération plus rapide avec la progression cubique
+        double expProgress = progress * progress * progress;
 
-        double currentFreq = START_FREQ + (END_FREQ - START_FREQ) * expProgress;  // Fréquence actuelle
-        double phaseIncrement = (currentFreq * 2.0 * PI) * timeStep; // Incrément de phase
+        double currentFreq = START_FREQ + (END_FREQ - START_FREQ) * expProgress;
+        double phaseIncrement = (currentFreq * 2.0 * PI) * timeStep;
 
         int freqIndex=(int)currentFreq;
 
@@ -34,8 +34,8 @@ int paCallback(const void *inputBuffer,
 
         data->phase += phaseIncrement;
 
-        while(data->phase >= 2.0 * PI) data->phase -= 2.0 * PI; // data
-        *out++ = (float)sin(data->phase); // Générer le signal sinusoïdal
+        while(data->phase >= 2.0 * PI) data->phase -= 2.0 * PI;
+            *out++ = (float)sin(data->phase);
         data->currentTime += timeStep;
         if(data->currentTime > DURATION) data->currentTime = DURATION; // Empêcher le dépassement
 /*

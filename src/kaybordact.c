@@ -38,15 +38,12 @@ void *keyboardInput(void* arg){
                 switch(ch){
                     case '1' :
                         isPress[laFreq[0]] = -1;
-                        printf("Frequency: %d Hz marquée dans isPress\n", laFreq[0]);
                         break;
                     case '2' :
                         isPress[laFreq[0]] = -2;
-                        printf("Frequency: %d Hz marquée dans isPress\n", laFreq[0]);
                         break;
                     case '3' :
                         isPress[laFreq[0]] = -3;
-                        printf("Frequency: %d Hz marquée dans isPress\n", laFreq[0]);
                         break;
                     default:
                         break;

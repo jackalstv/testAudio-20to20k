@@ -1,14 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <portaudio.h>
-#include <math.h>
 #include <stdbool.h>
 #include <unistd.h>
 #include <pthread.h>
 #include "../include/Portaudio.h"
 #include "../include/graphe.h"
-#include "../include/global.h"
-#include "../include/kaybordact.h"
 #include "../include/traitement.h"
 
 bool record = true;
@@ -19,10 +16,8 @@ volatile int keyPressed=0;
 
 int main(void) {
     FILE *gnuplot = popen("gnuplot", "w");
-    //volatile int keyPressed = 0; // Définition de la variable globale
     PaError err;
     PaStream *stream;
-    //int size = (int)END_FREQ- (int)START_FREQ + 1;
     int numSamples = (int)(DURATION * SAMPLING_RATE);
     double *signal = (double *)malloc(numSamples * sizeof(double));
 
