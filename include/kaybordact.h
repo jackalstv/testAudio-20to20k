@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <termios.h> // pour le mode canonique
-#include <stdbool.h> // pour les booléens
+#include <stdbool.h>
 #include <fcntl.h> // pour le mode non bloquant
 
 #include "global.h"

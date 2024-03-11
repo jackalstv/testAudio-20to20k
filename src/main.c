@@ -1,14 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <portaudio.h>
-#include <math.h>
 #include <stdbool.h>
 #include <unistd.h>
 #include <pthread.h>
 #include "../include/Portaudio.h"
 #include "../include/graphe.h"
-#include "../include/global.h"
-#include "../include/kaybordact.h"
 #include "../include/traitement.h"
 
 bool record = true;
