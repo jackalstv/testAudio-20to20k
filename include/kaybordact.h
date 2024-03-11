@@ -1,6 +1,4 @@
-//
-// Created by User on 2/19/2024.
-//
+//Jackalstv 11/03/2024
 
 #ifndef EGALISEUR_AUDIO_ADAPTATIF_KAYBORDACT_H
 #define EGALISEUR_AUDIO_ADAPTATIF_KAYBORDACT_H

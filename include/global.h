@@ -1,6 +1,4 @@
-//
-// Created by User on 07/03/2024.
-//
+//Jackalstv 11/03/2024
 
 #ifndef EGALISEUR_AUDIO_ADAPTATIF_GLOBAL_H
 #define EGALISEUR_AUDIO_ADAPTATIF_GLOBAL_H

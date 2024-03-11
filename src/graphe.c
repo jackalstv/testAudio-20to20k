@@ -1,6 +1,4 @@
-//
-// Created by User on 07/03/2024.
-//
+//Jackalstv 11/03/2024
 
 #include "../include/graphe.h"
 
