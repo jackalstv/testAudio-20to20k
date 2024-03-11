@@ -28,7 +28,7 @@ Après avoir lancé le code, l'enregistrement se lance, et vous devez rester app
 
 Voici une démonstration que j'ai faite :
 
-[Audiogram test](https://github.com/jackalstv/audiogram-20to20k/image/test.pdf)
+(https://github.com/jackalstv/audiogram-20to20k/image/test.pdf)
 
 ## Export du code
 Vous pouvez utiliser ce code comme bon vous semble ; je demanderais juste à être mentionné dans ce cas.
