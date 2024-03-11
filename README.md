@@ -16,7 +16,9 @@ Attention voter casque dois pouvoir delivrer un son Hi-res (pouvant aller jusqu'
 Le projet est fait pour fonctionner sur la version du 4 decembre 2023 d'Ubuntu.
 Pour pouvoir compiler le code vous devrait installer portaudio.
 
-   `sudo apt-get install portaudio19-dev`
+   ```sh
+  sudo apt-get install portaudio19-dev
+  ```
 
 ## Notice d'utilisation
 
@@ -25,4 +27,3 @@ Je conseille de mettre
 
 ## Export du code
 Vous pouvez utiliser la code comme bon vou semble, je demanderai juste etre mentionner dans ce cas. 
-
